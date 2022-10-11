@@ -1,0 +1,9 @@
+.infotooltip__icon_type_ok {
+  margin: 0 auto 32px;
+  padding: 0;
+  width: 120px;
+  height: 120px;
+  display: block;
+  background-image: url('./../../../images/ok-icon.svg');
+  background-color: #ffffff;
+}

@@ -1,0 +1,9 @@
+.popup__container_type_auth {
+  max-width: 358px;
+  margin: 60px auto 80px;
+  padding: 0;
+  color: #ffffff;
+  background-color: #000000;
+  border-radius: unset;
+  text-align: center;
+}

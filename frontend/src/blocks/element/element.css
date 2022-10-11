@@ -1,0 +1,13 @@
+.element {
+  margin: 0 auto;
+  padding: 0;
+  width: 282px;
+  height: 361px;
+  position: relative;
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: 10px;
+  font-size: 0;
+  display: flex;
+  flex-direction: column;
+}
