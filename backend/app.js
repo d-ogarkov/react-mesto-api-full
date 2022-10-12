@@ -12,11 +12,32 @@ const { MESSAGE_TYPE } = require('./constants/errors');
 const { REGEX_PATTERN } = require('./constants/patterns');
 
 const { PORT = 3000, BASE_PATH } = process.env;
+const allowedCors = [
+  'https://ogarkov.mesto.nomoredomains.icu',
+  'localhost:3000',
+];
+const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 const app = express();
 
 // Подключаемся к серверу MongoDB
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   autoIndex: true, // Без этого не будет работать unique: true в userSchema.email
+});
+
+// Поддержка CORS
+app.use((req, res, next) => {
+  const { method } = req; // Сохраняем тип запроса (HTTP-метод)
+  const { origin } = req.headers; // Сохраняем источник запроса
+  // Проверяем, есть ли источник запроса среди разрешенных
+  if (allowedCors.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', '*');
+  }
+  // Если это предварительный запрос, добавляем нужные заголовки
+  if (method === 'OPTIONS') {
+    // Разрешаем кросс-доменные запросы перечисленных типов
+    res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
+  }
+  next();
 });
 
 // Для разбора JSON
