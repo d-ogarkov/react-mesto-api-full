@@ -37,10 +37,10 @@ class Api {
       body: JSON.stringify({email, password})
     })
     .then((res) => {
-      if (res.ok) { 
-        return res.json(); 
-      } else { 
-        return Promise.reject(`Ошибка: ${res.status}`); 
+      if (res.ok) {
+        return res.json();
+      } else {
+        return Promise.reject(`Ошибка: ${res.status}`);
       }
     })
     .then((res) => {
@@ -60,10 +60,10 @@ class Api {
       body: JSON.stringify({email, password})
     })
     .then((res) => {
-      if (res.ok) { 
-        return res.json(); 
-      } else { 
-        return Promise.reject(`Ошибка: ${res.status}`); 
+      if (res.ok) {
+        return res.json();
+      } else {
+        return Promise.reject(`Ошибка: ${res.status}`);
       }
     })
     .then((data) => {
@@ -87,10 +87,10 @@ class Api {
       }
     })
     .then((res) => {
-      if (res.ok) { 
-        return res.json(); 
-      } else { 
-        return Promise.reject(`Ошибка: ${res.status}`); 
+      if (res.ok) {
+        return res.json();
+      } else {
+        return Promise.reject(`Ошибка: ${res.status}`);
       }
     })
     .then(data => data)
@@ -163,7 +163,7 @@ export const api = new Api({
   baseUrl: apiSettings.baseUrl,
   authUrl: apiSettings.authUrl,
   headers: {
-    authorization: apiSettings.authorization,
+    authorization: `Bearer ${localStorage.getItem('token')}`,
     'Content-Type': 'application/json'
   }
 });
