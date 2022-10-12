@@ -27,7 +27,7 @@ function App() {
   const [infoStateOk, setInfoStateOk] = useState(false); // Для отображения статуса в InfoTooltip: ОК или ошибка
   const [infoMessage, setInfoMessage] = useState(false); // Для отображения сообщения в InfoTooltip
   const [email, setEmail] = useState('');
-  const history = useHistory(); 
+  const history = useHistory();
 
   useEffect(() => {
     // Проверяем, есть ли сохраненный токен пользователя
@@ -35,6 +35,7 @@ function App() {
       const token = localStorage.getItem('token');
       tokenCheck(token);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleEditAvatarClick() {
@@ -107,7 +108,7 @@ function App() {
     api.addCard(newPlace)
     .then((res) => {
       if (res) {
-        setCards([res, ...cards]); 
+        setCards([res, ...cards]);
         closeAllPopups();
       }
     })
@@ -172,7 +173,7 @@ function App() {
           console.log('Авторизуем пользователя');
           // Авторизуем пользователя
           setLoggedIn(true);
-          // Сохраним нужные данные 
+          // Сохраним нужные данные
           setEmail(res.data.email);
           // Загрузим информацию для главной страницы
           loadUserData();
@@ -180,9 +181,9 @@ function App() {
           history.push("/");
         }
       })
-      .catch((err) => console.log(err)); 
+      .catch((err) => console.log(err));
     }
-  } 
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

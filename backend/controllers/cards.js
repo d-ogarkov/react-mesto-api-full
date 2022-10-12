@@ -5,7 +5,7 @@ const { MESSAGE_TYPE } = require('../constants/errors');
 
 module.exports.getCards = (req, res, next) => {
   Card.find({}).select('name link owner likes _id')
-    .then((card) => res.send({ data: card }))
+    .then((card) => res.send(card))
     .catch(next);
 };
 

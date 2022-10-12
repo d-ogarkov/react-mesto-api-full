@@ -4,13 +4,17 @@ class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
     this._authUrl = options.authUrl;
-    this._headers = options.headers;
   }
 
   _sendRequest(path, options = {}) {
-    // Объект с опциями запроса нужно объединить с _headers для дальнейшей передачи в fetch
-    // По умолчанию он пустой (для обычного GET-запроса без body)
-    let optionsWithHeaders = { headers: this._headers };
+    // Объект с опциями запроса нужно объединить с заголовками авторизации для дальнейшей передачи в fetch
+    // По умолчанию опции запроса пустые (для обычного GET-запроса без body)
+    let optionsWithHeaders = {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      }
+    };
     optionsWithHeaders = Object.assign(options, optionsWithHeaders);
 
     return fetch(`${this._baseUrl}/${path}`, optionsWithHeaders)
@@ -162,8 +166,4 @@ class Api {
 export const api = new Api({
   baseUrl: apiSettings.baseUrl,
   authUrl: apiSettings.authUrl,
-  headers: {
-    authorization: `Bearer ${localStorage.getItem('token')}`,
-    'Content-Type': 'application/json'
-  }
 });
