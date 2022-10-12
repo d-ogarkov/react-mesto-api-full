@@ -10,13 +10,9 @@ const { login, createUser } = require('./controllers/users');
 const NotFoundError = require('./errors/not-found');
 const { MESSAGE_TYPE } = require('./constants/errors');
 const { REGEX_PATTERN } = require('./constants/patterns');
+const { allowedCors, DEFAULT_ALLOWED_METHODS, DEFAULT_ALLOWED_HEADERS } = require('./constants/cors');
 
 const { PORT = 3000, BASE_PATH } = process.env;
-const allowedCors = [
-  'https://ogarkov.mesto.nomoredomains.icu',
-  'localhost:3000',
-];
-const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 const app = express();
 
 // Подключаемся к серверу MongoDB
@@ -36,6 +32,7 @@ app.use((req, res, next) => {
   if (method === 'OPTIONS') {
     // Разрешаем кросс-доменные запросы перечисленных типов
     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
+    res.header('Access-Control-Allow-Headers', DEFAULT_ALLOWED_HEADERS);
     return res.end();
   }
   next();
