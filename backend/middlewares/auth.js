@@ -5,7 +5,9 @@ const { MESSAGE_TYPE } = require('../constants/errors');
 // Middleware для авторизации
 module.exports = (req, res, next) => {
   // Кука 'jwt' с токеном должна присутствовать
-  let token = req.cookies.jwt;
+  //let token = req.cookies.jwt;
+  // Временный токен для тестирования:
+  let token = '27d6d61f-172a-41c1-9765-ba95d6225fca';
 
   // Но если ее нет, проверим еще токен в заголовках (без этого не проходят тесты ПР14)
   if (!token) {
