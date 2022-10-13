@@ -12,6 +12,7 @@ export default function Card({card, onCardClick, onCardLike, onCardDelete}) {
     `element__trash-btn ${isOwn ? 'element__trash-btn_visible' : 'element__trash-btn_hidden'}`
   );
 
+  console.log(card);
   // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
   const isLiked = card.likes.some(i => i === currentUser._id);
 
