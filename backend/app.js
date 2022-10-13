@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
@@ -12,9 +13,10 @@ const { MESSAGE_TYPE } = require('./constants/errors');
 const { REGEX_PATTERN } = require('./constants/patterns');
 const { allowedCors, DEFAULT_ALLOWED_METHODS, DEFAULT_ALLOWED_HEADERS } = require('./constants/cors');
 
-require('dotenv').config(); 
-const { PORT = 3000, BASE_PATH } = process.env;
+const { PORT = 3001, BASE_PATH } = process.env;
 const app = express();
+
+console.log(process.env);
 
 // Подключаемся к серверу MongoDB
 mongoose.connect('mongodb://localhost:27017/mestodb', {
@@ -47,6 +49,13 @@ app.use(cookieParser());
 
 // Подключение логирования запросов на сервер
 app.use(requestLogger);
+
+// Для краш-теста сервера (pm2 должен поднять упавший сервер)
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 // Эти роуты не требуют авторизации
 app.post('/signin', celebrate({

@@ -64,7 +64,7 @@ function App() {
 
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api.changeLikeCardStatus(card._id, !isLiked)
@@ -170,11 +170,11 @@ function App() {
     if (jwt) {
       api.getContent(jwt).then((res) => {
         if (res) {
-          console.log('Авторизуем пользователя');
           // Авторизуем пользователя
           setLoggedIn(true);
           // Сохраним нужные данные
-          setEmail(res.data.email);
+          //setEmail(res.data.email);
+          setEmail(res.email);
           // Загрузим информацию для главной страницы
           loadUserData();
           // Перенаправим на главную

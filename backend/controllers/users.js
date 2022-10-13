@@ -4,6 +4,7 @@ const User = require('../models/user');
 const ConflictError = require('../errors/conflict');
 const NotFoundError = require('../errors/not-found');
 const ValidityError = require('../errors/validity');
+const { NODE_ENV, JWT_SECRET, JWT_DEV } = process.env;
 const { ERROR_TYPE, MESSAGE_TYPE } = require('../constants/errors');
 
 module.exports.login = (req, res, next) => {
@@ -14,17 +15,9 @@ module.exports.login = (req, res, next) => {
       // Создадим токен
       const token = jwt.sign(
         { _id: user._id },
-        'some-secret-key',
+        NODE_ENV === 'production' ? JWT_SECRET : JWT_DEV,
         { expiresIn: '7d' },
       );
-
-      // Вернем токен в куке с опциями httpOnly и sameSite
-      res.cookie('jwt', token, {
-        maxAge: 3600000 * 24 * 7,
-        httpOnly: true,
-        sameSite: true,
-      });
-
       res.send({ token }).end();
     })
     .catch(next);
@@ -32,7 +25,7 @@ module.exports.login = (req, res, next) => {
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send(user))
     .catch(next);
 };
 
@@ -42,7 +35,6 @@ module.exports.getUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError(MESSAGE_TYPE.noUser);
       }
-      //res.send({ data: user });
       res.send(user);
       return true;
     })
@@ -62,7 +54,6 @@ module.exports.getCurrentUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError(MESSAGE_TYPE.noUser);
       }
-      //res.send({ data: user });
       res.send(user);
       return true;
     })
@@ -113,7 +104,7 @@ module.exports.updateUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError(MESSAGE_TYPE.noUser);
       }
-      res.send({ data: user });
+      res.send(user);
       return true;
     })
     .catch((err) => {
@@ -138,7 +129,7 @@ module.exports.updateAvatar = (req, res, next) => {
       if (!user) {
         throw new NotFoundError(MESSAGE_TYPE.noUser);
       }
-      res.send({ data: user });
+      res.send(user);
       return true;
     })
     .catch((err) => {
