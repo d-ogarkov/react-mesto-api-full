@@ -42,7 +42,8 @@ module.exports.getUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError(MESSAGE_TYPE.noUser);
       }
-      res.send({ data: user });
+      //res.send({ data: user });
+      res.send(user);
       return true;
     })
     .catch((err) => {
@@ -61,7 +62,8 @@ module.exports.getCurrentUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError(MESSAGE_TYPE.noUser);
       }
-      res.send({ data: user });
+      //res.send({ data: user });
+      res.send(user);
       return true;
     })
     .catch(next);

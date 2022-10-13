@@ -12,6 +12,7 @@ const { MESSAGE_TYPE } = require('./constants/errors');
 const { REGEX_PATTERN } = require('./constants/patterns');
 const { allowedCors, DEFAULT_ALLOWED_METHODS, DEFAULT_ALLOWED_HEADERS } = require('./constants/cors');
 
+require('dotenv').config(); 
 const { PORT = 3000, BASE_PATH } = process.env;
 const app = express();
 
