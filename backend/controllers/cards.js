@@ -37,14 +37,11 @@ module.exports.deleteCard = (req, res, next) => {
       }
 
       // Если проверка пройдена, удалим карточку
-      Card.findByIdAndRemove(req.params.cardId)
+      return Card.findByIdAndRemove(req.params.cardId)
         .then((deletedCard) => res.send(deletedCard))
         .catch(next);
-      return true;
     })
     .catch(next);
-
-  return true;
 };
 
 module.exports.likeCard = (req, res, next) => {
@@ -57,12 +54,9 @@ module.exports.likeCard = (req, res, next) => {
       if (!card) {
         throw new NotFoundError(MESSAGE_TYPE.noCard);
       }
-      res.send(card);
-      return true;
+      return res.send(card);
     })
     .catch(next);
-
-  return true;
 };
 
 module.exports.dislikeCard = (req, res, next) => {
@@ -75,10 +69,7 @@ module.exports.dislikeCard = (req, res, next) => {
       if (!card) {
         throw new NotFoundError(MESSAGE_TYPE.noCard);
       }
-      res.send(card);
-      return true;
+      return res.send(card);
     })
     .catch(next);
-
-  return true;
 };

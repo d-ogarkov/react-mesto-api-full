@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
@@ -39,9 +38,6 @@ app.use((req, res, next) => {
 
 // Для разбора JSON
 app.use(bodyParser.json());
-
-// Для обработки кук, т.к. токен отдаем в куки
-app.use(cookieParser());
 
 // Подключение логирования запросов на сервер
 app.use(requestLogger);

@@ -36,8 +36,7 @@ module.exports.getUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError(MESSAGE_TYPE.noUser);
       }
-      res.send(user);
-      return true;
+      return res.send(user);
     })
     .catch((err) => {
       if (err.name === ERROR_TYPE.cast) {
@@ -45,8 +44,6 @@ module.exports.getUser = (req, res, next) => {
       }
       return next(err);
     });
-
-  return true;
 };
 
 module.exports.getCurrentUser = (req, res, next) => {
@@ -55,12 +52,9 @@ module.exports.getCurrentUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError(MESSAGE_TYPE.noUser);
       }
-      res.send(user);
-      return true;
+      return res.send(user);
     })
     .catch(next);
-
-  return true;
 };
 
 module.exports.createUser = (req, res, next) => {
@@ -105,8 +99,7 @@ module.exports.updateUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError(MESSAGE_TYPE.noUser);
       }
-      res.send(user);
-      return true;
+      return res.send(user);
     })
     .catch((err) => {
       if (err.name === ERROR_TYPE.validity) {
@@ -130,8 +123,7 @@ module.exports.updateAvatar = (req, res, next) => {
       if (!user) {
         throw new NotFoundError(MESSAGE_TYPE.noUser);
       }
-      res.send(user);
-      return true;
+      return res.send(user);
     })
     .catch((err) => {
       if (err.name === ERROR_TYPE.validity) {
