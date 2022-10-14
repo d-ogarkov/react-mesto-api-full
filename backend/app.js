@@ -3,20 +3,15 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const { errors, celebrate, Joi } = require('celebrate');
+const { errors } = require('celebrate');
 
-const auth = require('./middlewares/auth');
+const routes = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { login, createUser } = require('./controllers/users');
-const NotFoundError = require('./errors/not-found');
-const { MESSAGE_TYPE } = require('./constants/errors');
-const { REGEX_PATTERN } = require('./constants/patterns');
+const err = require('./middlewares/err');
 const { allowedCors, DEFAULT_ALLOWED_METHODS, DEFAULT_ALLOWED_HEADERS } = require('./constants/cors');
 
 const { PORT = 3000, BASE_PATH } = process.env;
 const app = express();
-
-console.log(process.env);
 
 // Подключаемся к серверу MongoDB
 mongoose.connect('mongodb://localhost:27017/mestodb', {
@@ -39,6 +34,7 @@ app.use((req, res, next) => {
     return res.end();
   }
   next();
+  return null;
 });
 
 // Для разбора JSON
@@ -57,34 +53,8 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-// Эти роуты не требуют авторизации
-app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().pattern(REGEX_PATTERN.email),
-    password: Joi.string().required(),
-  }),
-}), login);
-app.post('/signup', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-    avatar: Joi.string().pattern(REGEX_PATTERN.url),
-    email: Joi.string().required().pattern(REGEX_PATTERN.email),
-    password: Joi.string().required(),
-  }),
-}), createUser);
-
-// Авторизация
-app.use(auth);
-
-// Все роуты ниже требуют авторизации
-app.use('/users', require('./routes/users'));
-app.use('/cards', require('./routes/cards'));
-
-// После всех роутов ловим неправильные пути
-app.use(() => {
-  throw new NotFoundError(MESSAGE_TYPE.noPath);
-});
+// Роутинг (вынесен отдельно)
+app.use(routes);
 
 // Подключение логирования ошибок
 app.use(errorLogger);
@@ -93,21 +63,7 @@ app.use(errorLogger);
 app.use(errors());
 
 // Централизованная обработка ошибок
-app.use((err, req, res, next) => {
-  // Если у ошибки нет статуса, выставляем 500
-  const { statusCode = 500, message } = err;
-
-  res
-    .status(statusCode)
-    .send({
-      // Проверяем статус и выставляем сообщение в зависимости от него
-      message: statusCode === 500
-        ? MESSAGE_TYPE.default
-        : message,
-    });
-
-  next();
-});
+app.use(err);
 
 // Слушаем порт
 app.listen(PORT, () => {

@@ -1,7 +1,8 @@
 const Card = require('../models/card');
 const NotFoundError = require('../errors/not-found');
 const ForbiddenError = require('../errors/forbidden');
-const { MESSAGE_TYPE } = require('../constants/errors');
+const ValidityError = require('../errors/validity');
+const { ERROR_TYPE, MESSAGE_TYPE } = require('../constants/errors');
 
 module.exports.getCards = (req, res, next) => {
   Card.find({}).select('name link owner likes _id')
@@ -14,7 +15,12 @@ module.exports.createCard = (req, res, next) => {
   const owner = req.user._id;
   Card.create({ name, link, owner })
     .then((card) => res.send(card))
-    .catch(next);
+    .catch((err) => {
+      if (err.name === ERROR_TYPE.validity) {
+        return next(new ValidityError(MESSAGE_TYPE.validity));
+      }
+      return next(err);
+    });
 };
 
 module.exports.deleteCard = (req, res, next) => {

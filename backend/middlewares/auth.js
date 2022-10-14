@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const AuthError = require('../errors/auth');
-const { NODE_ENV, JWT_SECRET, JWT_DEV } = process.env;
+
+const { NODE_ENV, JWT_SECRET } = process.env;
 const { MESSAGE_TYPE } = require('../constants/errors');
 
 // Middleware для авторизации
@@ -18,7 +19,7 @@ module.exports = (req, res, next) => {
   try {
     payload = jwt.verify(
       token,
-      NODE_ENV === 'production' ? JWT_SECRET : JWT_DEV,
+      NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret-key',
     );
   } catch (err) {
     throw new AuthError(MESSAGE_TYPE.unauthorized);

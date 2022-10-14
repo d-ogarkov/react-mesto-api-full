@@ -1,5 +1,6 @@
 const allowedCors = [
   'https://ogarkov.mesto.nomoredomains.icu',
+  'http://ogarkov.mesto.nomoredomains.icu',
   'http://localhost:3000',
   'localhost:3000',
 ];
