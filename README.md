@@ -8,6 +8,11 @@
 
 Бэкенд на Node.js, Express, MongoDB (в `backend/`).
 
+## Демо
+
+* [Frontend](https://ogarkov.mesto.nomoredomains.icu)
+* [Backend](https://api.ogarkov.mesto.nomoredomains.icu)
+
 ## Запуск
 
 ### Фронтенд
@@ -21,12 +26,6 @@
 `npm run dev` — запускает проект в режиме разработки
 
 `npm start` — запускает проект в обычном режиме
-
-## Как найти фронтенд и бэкенд
-
-* IP 84.201.163.58
-* Frontend https://ogarkov.mesto.nomoredomains.icu
-* Backend https://api.ogarkov.mesto.nomoredomains.icu
 
 ## Возможные доработки
 
