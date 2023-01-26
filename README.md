@@ -28,6 +28,11 @@
 * Frontend https://ogarkov.mesto.nomoredomains.icu
 * Backend https://api.ogarkov.mesto.nomoredomains.icu
 
+## Возможные доработки
+
+* Добавление комментариев к фото
+* Подтверждение регистрации по email
+
 ## Ссылки
 
 * [Репозиторий](https://github.com/d-ogarkov/react-mesto-api-full)
