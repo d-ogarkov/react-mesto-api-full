@@ -1,4 +1,4 @@
 export const apiSettings = {
-  baseUrl: 'http://api.ogarkov.mesto.com',
-  authUrl: 'http://api.ogarkov.mesto.com',
+  baseUrl: 'http://api.mesto.ogarkov.com',
+  authUrl: 'http://api.mesto.ogarkov.com',
 }
