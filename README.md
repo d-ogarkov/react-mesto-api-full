@@ -10,8 +10,8 @@
 
 ## Демо
 
-* [Frontend](https://ogarkov.mesto.nomoredomains.icu)
-* [Backend](https://api.ogarkov.mesto.nomoredomains.icu)
+* [Frontend](https://mesto.ogarkov.com)
+* [Backend](https://api.mesto.ogarkov.com)
 
 ## Запуск
 
