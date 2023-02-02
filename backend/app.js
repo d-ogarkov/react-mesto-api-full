@@ -9,7 +9,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const err = require('./middlewares/err');
 const { allowedCors, DEFAULT_ALLOWED_METHODS, DEFAULT_ALLOWED_HEADERS } = require('./constants/cors');
 
-const { PORT = 3000, BASE_PATH } = process.env;
+const { PORT = 3001, BASE_PATH } = process.env;
 const app = express();
 
 // Подключаемся к серверу MongoDB
